@@ -115,6 +115,50 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
+export const resendOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User with this email does not exist",
+      });
+    }
+    if (user.isVerified) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is already verified",
+      });
+    }
+    const otp = generateOtp();
+    const mailOptions = generateOtpMail(otp, email);
+    try {
+      await transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.log("Error sending OTP email", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to send OTP email",
+      });
+    }
+    user.otp = otp;
+    user.otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); // OTP valid for 5 minutes
+    await user.save();
+    return res.status(200).json({
+      success: true,
+      message: "OTP resent successfully",
+      data: { email: user.email, otp: otp },
+    });
+  } catch (error) {
+    console.log("Error in resend OTP", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
