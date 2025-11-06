@@ -7,14 +7,16 @@ A Node.js + Express-based backend API that provides **user authentication (with 
 ## 🚀 Features
 
 ### 🔐 Authentication Module
-- **User Registration** with email OTP verification  
-- **User Login / Logout**  
-- **Email Verification** (OTP-based)  
-- **Resend OTP** functionality  
-- JWT-based authentication for secure session handling  
+
+- **User Registration** with email OTP verification
+- **User Login / Logout**
+- **Email Verification** (OTP-based)
+- **Resend OTP** functionality
+- JWT-based authentication for secure session handling
 
 ### 🗞️ News Aggregation Module
-- Fetch live news articles from [GNews.io](https://gnews.io/)  
+
+- Fetch live news articles from [GNews.io](https://gnews.io/)
 - Supports multiple query parameters such as:
   - Keywords (`q`)
   - Language (`lang`)
@@ -22,22 +24,22 @@ A Node.js + Express-based backend API that provides **user authentication (with 
   - Pagination (`page`)
   - Sort options (`sortby`)
   - Date filters (`from`, `to`)
-- Integrates via a single controller (`newsController.js`)  
-- Easy testing through Postman  
+- Integrates via a single controller (`newsController.js`)
+- Easy testing through Postman
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|-------------|
-| Runtime | Node.js |
-| Framework | Express.js |
-| Database | MongoDB (Mongoose) |
-| Authentication | JWT + Email OTP |
-| External API | GNews.io |
-| Environment | dotenv |
-| Testing | Postman |
+| Layer          | Technology         |
+| -------------- | ------------------ |
+| Runtime        | Node.js            |
+| Framework      | Express.js         |
+| Database       | MongoDB (Mongoose) |
+| Authentication | JWT + Email OTP    |
+| External API   | GNews.io           |
+| Environment    | dotenv             |
+| Testing        | Postman            |
 
 ---
 
@@ -78,18 +80,22 @@ project-root/
 ## ⚙️ Installation & Setup
 
 ### 1️⃣ Clone the repository
+
 ```bash
-git clone https://github.com/yourusername/news-auth-api.git
+git clone https://github.com/mdfaiz1/news-auth-api.git
 cd news-auth-api
 ```
 
 ### 2️⃣ Install dependencies
+
 ```bash
 npm install
 ```
 
 ### 3️⃣ Add environment variables
+
 Create a `.env` file in the root directory and add:
+
 ```env
 # =====================================
 # 🌐 SERVER CONFIGURATION
@@ -125,10 +131,13 @@ SMTP_SEND_MAIL=your_verified_sender@gmail.com # The “from” email shown in us
 ```
 
 ### 4️⃣ Run the server
+
 ```bash
-npm start
+npm run dev
 ```
+
 or (for development with auto-restart)
+
 ```bash
 npx nodemon app.js
 ```
@@ -138,28 +147,32 @@ npx nodemon app.js
 ## 🔗 API Endpoints
 
 ### 🔐 Auth Routes (`/api/auth`)
-| Method | Endpoint | Description |
-|--------|-----------|-------------|
-| `POST` | `/register` | Register new user & send OTP |
-| `POST` | `/verify-email` | Verify user’s email using OTP |
-| `POST` | `/resend-otp` | Resend OTP to email |
-| `POST` | `/login` | Authenticate user and return JWT |
-| `POST` | `/logout` | Invalidate JWT / end session |
+
+| Method | Endpoint        | Description                      |
+| ------ | --------------- | -------------------------------- |
+| `POST` | `/register`     | Register new user & send OTP     |
+| `POST` | `/verify-email` | Verify user’s email using OTP    |
+| `POST` | `/resend-otp`   | Resend OTP to email              |
+| `POST` | `/login`        | Authenticate user and return JWT |
+| `POST` | `/logout`       | Invalidate JWT / end session     |
 
 ---
 
 ### 🗞️ News Routes (`/api/news`)
-| Method | Endpoint | Description |
-|--------|-----------|-------------|
-| `GET` | `/check` | Health check route |
-| `GET` | `/` | Fetch news articles using GNews API |
+
+| Method | Endpoint | Description                         |
+| ------ | -------- | ----------------------------------- |
+| `GET`  | `/check` | Health check route                  |
+| `GET`  | `/`      | Fetch news articles using GNews API |
 
 **Example Request:**
+
 ```
 GET /api/news?q=AI&lang=en&country=us&max=10&page=1
 ```
 
 **Example Response:**
+
 ```json
 {
   "totalArticles": 10,
@@ -180,31 +193,33 @@ GET /api/news?q=AI&lang=en&country=us&max=10&page=1
 ## 🧪 Testing with Postman
 
 ### Health Check
+
 ```
 GET http://localhost:5000/api/news/check
 ```
 
 ### Example Auth Flow
-1. `POST /api/auth/register` → send email & OTP  
-2. `POST /api/auth/verify-email` → confirm OTP  
-3. `POST /api/auth/login` → receive JWT token  
-4. Use `Authorization: Bearer <token>` for protected routes  
+
+1. `POST /api/auth/register` → send email & OTP
+2. `POST /api/auth/verify-email` → confirm OTP
+3. `POST /api/auth/login` → receive JWT token
+4. Use `Authorization: Bearer <token>` for protected routes
 
 ---
 
 ## 🧠 Query Parameters for News API
 
-| Parameter | Example | Description |
-|------------|----------|-------------|
-| q | `technology` | Search keywords |
-| lang | `en` | Language filter |
-| country | `us` | Country filter |
-| max | `10` | Number of results |
-| from | `2025-10-01T00:00:00Z` | Start date |
-| to | `2025-11-06T00:00:00Z` | End date |
-| sortby | `relevance` | Sort order |
-| page | `1` | Pagination |
-| in | `title,description` | Search in fields |
+| Parameter | Example                | Description       |
+| --------- | ---------------------- | ----------------- |
+| q         | `technology`           | Search keywords   |
+| lang      | `en`                   | Language filter   |
+| country   | `us`                   | Country filter    |
+| max       | `10`                   | Number of results |
+| from      | `2025-10-01T00:00:00Z` | Start date        |
+| to        | `2025-11-06T00:00:00Z` | End date          |
+| sortby    | `relevance`            | Sort order        |
+| page      | `1`                    | Pagination        |
+| in        | `title,description`    | Search in fields  |
 
 ---
 
@@ -217,14 +232,16 @@ curl "http://localhost:5000/api/news?q=AI&lang=en&country=us&max=5&apikey=your_a
 ---
 
 ## 🧩 To-Do / Future Enhancements
-- 🔒 Password reset via email  
-- 🧑‍💼 Admin dashboard for managing users & news logs  
-- 📰 Save favorite articles for users  
-- 🌐 Frontend integration with React or Next.js  
+
+- 🔒 Password reset via email
+- 🧑‍💼 Admin dashboard for managing users & news logs
+- 📰 Save favorite articles for users
+- 🌐 Frontend integration with React or Next.js
 
 ---
 
 ## 👨‍💻 Author
+
 **Md Faiz Alam**  
 Backend Developer | MERN Stack | Passionate about clean architecture and API design  
-📧 mdfaizalam022@gmail.com 
+📧 mdfaizalam022@gmail.com
